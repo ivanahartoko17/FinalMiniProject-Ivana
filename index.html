@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       MAIN DASHBOARD WRAPPER
+  ============================================================ -->
+  <main class="dashboard" id="app">
+
+    <!-- --------------------------------------------------------
+         SECTION 1: GREETING + CLOCK
+    -------------------------------------------------------- -->
+    <section class="card greeting-card" aria-label="Greeting and Clock">
+
+      <div class="greeting-block">
+        <p class="greeting-label" id="greetingText">Good Morning</p>
+        <h1 class="greeting-name" id="greetingName">Hello!</h1>
+      </div>
+
+      <div class="clock-block">
+        <div class="clock-time" id="clockTime" aria-live="polite">00:00:00</div>
+        <div class="clock-date" id="clockDate">Friday, June 19, 2026</div>
+      </div>
+
+      <div class="greeting-actions">
+        <!-- Name change form -->
+        <div class="name-form" id="nameForm">
+          <input
+            type="text"
+            id="nameInput"
+            class="input-field"
+            placeholder="Enter your name..."
+            maxlength="30"
+            aria-label="Your name"
+          />
+          <button class="btn btn-primary" id="saveNameBtn">Save Name</button>
+        </div>
+        <button class="btn btn-secondary" id="changeNameBtn">Change Name</button>
+
+        <!-- Theme toggle -->
+        <button class="btn btn-icon" id="themeToggleBtn" aria-label="Toggle theme" title="Toggle Light / Dark Mode">
+          <span id="themeIcon">🌙</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- --------------------------------------------------------
+         SECTION 2: FOCUS / POMODORO TIMER
+    -------------------------------------------------------- -->
+    <section class="card timer-card" aria-label="Focus Timer">
+
+      <h2 class="card-title">🎯 Focus Timer</h2>
+
+      <div class="timer-display" id="timerDisplay" aria-live="polite">25:00</div>
+
+      <div class="timer-controls">
+        <button class="btn btn-success" id="timerStartBtn">Start</button>
+        <button class="btn btn-warning" id="timerStopBtn">Stop</button>
+        <button class="btn btn-danger"  id="timerResetBtn">Reset</button>
+      </div>
+
+    </section>
+
+    <!-- --------------------------------------------------------
+         SECTION 3: TO-DO LIST
+    -------------------------------------------------------- -->
+    <section class="card todo-card" aria-label="To-Do List">
+
+      <h2 class="card-title">📝 To-Do List</h2>
+
+      <!-- Add task input -->
+      <div class="todo-input-row">
+        <input
+          type="text"
+          id="taskInput"
+          class="input-field"
+          placeholder="Enter a task..."
+          maxlength="200"
+          aria-label="New task"
+        />
+        <button class="btn btn-primary" id="addTaskBtn">Add Task</button>
+      </div>
+
+      <!-- Task list -->
+      <ul class="task-list" id="taskList" aria-label="Tasks">
+        <!-- Tasks are rendered by JavaScript -->
+      </ul>
+
+      <!-- Empty state -->
+      <p class="empty-state" id="taskEmptyState">No tasks yet. Add one above!</p>
+
+    </section>
+
+    <!-- --------------------------------------------------------
+         SECTION 4: QUICK LINKS
+    -------------------------------------------------------- -->
+    <section class="card links-card" aria-label="Quick Links">
+
+      <h2 class="card-title">🔗 Quick Links</h2>
+
+      <!-- Saved link buttons -->
+      <div class="links-grid" id="linksGrid">
+        <!-- Links are rendered by JavaScript -->
+      </div>
+
+      <!-- Empty state -->
+      <p class="empty-state" id="linksEmptyState">No links saved yet. Add one below!</p>
+
+      <!-- Add link form -->
+      <div class="link-form">
+        <div class="link-form-fields">
+          <div class="form-group">
+            <label for="linkNameInput" class="form-label">Website Name</label>
+            <input
+              type="text"
+              id="linkNameInput"
+              class="input-field"
+              placeholder="e.g. ChatGPT"
+              maxlength="40"
+              aria-label="Website name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="linkUrlInput" class="form-label">Website URL</label>
+            <input
+              type="url"
+              id="linkUrlInput"
+              class="input-field"
+              placeholder="e.g. https://chat.openai.com"
+              aria-label="Website URL"
+            />
+          </div>
+        </div>
+        <button class="btn btn-primary" id="addLinkBtn">Add Link</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Edit Task Modal -->
+  <div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle" hidden>
+    <div class="modal">
+      <h3 class="modal-title" id="editModalTitle">Edit Task</h3>
+      <input
+        type="text"
+        id="editTaskInput"
+        class="input-field"
+        maxlength="200"
+        aria-label="Edit task text"
+      />
+      <div class="modal-actions">
+        <button class="btn btn-primary"   id="saveEditBtn">Save</button>
+        <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
