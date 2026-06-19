@@ -1,0 +1,715 @@
+/* ============================================================
+   LIFE DASHBOARD — style.css
+   Sections:
+     1. CSS Custom Properties (Design Tokens)
+     2. Reset & Base
+     3. Layout
+     4. Card
+     5. Greeting / Clock Section
+     6. Timer Section
+     7. To-Do Section
+     8. Quick Links Section
+     9. Edit Modal
+    10. Utility Classes
+    11. Responsive (mobile)
+============================================================ */
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES — Light Theme (default)
+============================================================ */
+:root {
+  /* Brand palette */
+  --color-primary:       #6366f1;   /* indigo */
+  --color-primary-hover: #4f46e5;
+  --color-success:       #22c55e;
+  --color-success-hover: #16a34a;
+  --color-warning:       #f59e0b;
+  --color-warning-hover: #d97706;
+  --color-danger:        #ef4444;
+  --color-danger-hover:  #dc2626;
+
+  /* Surfaces */
+  --bg-page:   #f1f5f9;
+  --bg-card:   #ffffff;
+  --bg-input:  #f8fafc;
+
+  /* Text */
+  --text-primary:   #0f172a;
+  --text-secondary: #64748b;
+  --text-muted:     #94a3b8;
+  --text-on-color:  #ffffff;
+
+  /* Borders & shadows */
+  --border-color:  #e2e8f0;
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg:     0 20px 40px rgba(0, 0, 0, 0.12);
+
+  /* Radii */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+
+  /* Spacing scale */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+
+  /* Typography */
+  --font-base: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+}
+
+/* ============================================================
+   1b. CSS CUSTOM PROPERTIES — Dark Theme
+============================================================ */
+[data-theme="dark"] {
+  --bg-page:   #0f172a;
+  --bg-card:   #1e293b;
+  --bg-input:  #0f172a;
+
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #475569;
+  --text-on-color:  #ffffff;
+
+  --border-color: #334155;
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md:    0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg:    0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: var(--space-lg) var(--space-md);
+  transition: background-color var(--transition), color var(--transition);
+  line-height: 1.6;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-base);
+}
+
+input {
+  font-family: var(--font-base);
+}
+
+
+/* ============================================================
+   3. LAYOUT — dashboard grid
+============================================================ */
+.dashboard {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+
+/* ============================================================
+   4. CARD — shared card shell
+============================================================ */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
+  box-shadow: var(--shadow-md);
+  transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  letter-spacing: -0.01em;
+}
+
+
+/* ============================================================
+   5. GREETING / CLOCK SECTION
+============================================================ */
+.greeting-card {
+  text-align: center;
+}
+
+/* Greeting text row */
+.greeting-block {
+  margin-bottom: var(--space-md);
+}
+
+.greeting-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-xs);
+}
+
+.greeting-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+/* Clock row */
+.clock-block {
+  margin-bottom: var(--space-lg);
+}
+
+.clock-time {
+  font-size: 3.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.clock-date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Actions row */
+.greeting-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Name form — hidden by default, shown when user clicks "Change Name" */
+.name-form {
+  display: none;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  justify-content: center;
+}
+
+.name-form.visible {
+  display: flex;
+}
+
+.name-form .input-field {
+  max-width: 220px;
+}
+
+
+/* ============================================================
+   6. FOCUS TIMER SECTION
+============================================================ */
+.timer-card {
+  text-align: center;
+}
+
+.timer-display {
+  font-size: 5rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: var(--space-lg);
+  /* Subtle gradient tint on the timer digits */
+  background: linear-gradient(135deg, var(--color-primary), #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Fallback for browsers that don't support bg-clip text */
+@supports not (-webkit-background-clip: text) {
+  .timer-display {
+    color: var(--color-primary);
+    background: none;
+  }
+}
+
+.timer-controls {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   7. TO-DO LIST SECTION
+============================================================ */
+.todo-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.todo-input-row .input-field {
+  flex: 1;
+}
+
+/* Task list */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Individual task item */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.task-item:hover {
+  border-color: var(--color-primary);
+}
+
+/* Custom checkbox */
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition), background-color var(--transition);
+  font-size: 0.7rem;
+  color: var(--text-on-color);
+}
+
+.task-checkbox:hover {
+  border-color: var(--color-primary);
+}
+
+.task-item.done .task-checkbox {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.task-item.done .task-checkbox::after {
+  content: '✓';
+}
+
+/* Task text */
+.task-text {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  word-break: break-word;
+  transition: color var(--transition);
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Task action buttons */
+.task-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.task-btn {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+  background: transparent;
+  cursor: pointer;
+}
+
+.task-btn-edit {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.task-btn-edit:hover {
+  background-color: var(--color-primary);
+  color: var(--text-on-color);
+}
+
+.task-btn-delete {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.task-btn-delete:hover {
+  background-color: var(--color-danger);
+  color: var(--text-on-color);
+}
+
+
+/* ============================================================
+   8. QUICK LINKS SECTION
+============================================================ */
+.links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  min-height: 0;
+}
+
+/* Each link entry = button + small delete icon */
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.link-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.link-anchor {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color var(--transition), background-color var(--transition);
+}
+
+.link-anchor:hover {
+  color: var(--color-primary);
+}
+
+.link-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: var(--space-sm) var(--space-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-left: 1px solid var(--border-color);
+  transition: color var(--transition), background-color var(--transition);
+  line-height: 1;
+}
+
+.link-delete-btn:hover {
+  background-color: var(--color-danger);
+  color: var(--text-on-color);
+  border-left-color: var(--color-danger);
+}
+
+/* Link add form */
+.link-form {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.link-form-fields {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/* ============================================================
+   9. EDIT MODAL
+============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-md);
+  animation: fadeIn 0.15s ease;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.2s ease;
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+
+/* ============================================================
+   10. UTILITY CLASSES
+============================================================ */
+
+/* Shared input field */
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 10px var(--space-md);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+.input-field:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  background-color: var(--bg-card);
+}
+
+/* Shared button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px var(--space-lg);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition), transform 0.1s ease, box-shadow var(--transition);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--text-on-color);
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+.btn-secondary {
+  background-color: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: var(--text-on-color);
+}
+.btn-success:hover {
+  background-color: var(--color-success-hover);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+  color: var(--text-on-color);
+}
+.btn-warning:hover {
+  background-color: var(--color-warning-hover);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--text-on-color);
+}
+.btn-danger:hover {
+  background-color: var(--color-danger-hover);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+/* Icon-only button (theme toggle) */
+.btn-icon {
+  background-color: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: background-color var(--transition), transform 0.15s ease;
+}
+
+.btn-icon:hover {
+  background-color: var(--border-color);
+}
+
+/* Empty state message */
+.empty-state {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-md) 0;
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+
+/* ============================================================
+   11. RESPONSIVE — mobile ≤ 560px
+============================================================ */
+@media (max-width: 560px) {
+  body {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .card {
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  .clock-time {
+    font-size: 2.6rem;
+  }
+
+  .greeting-name {
+    font-size: 1.6rem;
+  }
+
+  .timer-display {
+    font-size: 3.5rem;
+  }
+
+  .link-form-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .todo-input-row {
+    flex-direction: column;
+  }
+
+  .todo-input-row .input-field {
+    width: 100%;
+  }
+
+  .name-form {
+    flex-direction: column;
+  }
+
+  .name-form .input-field {
+    max-width: 100%;
+    width: 100%;
+  }
+}
